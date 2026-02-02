@@ -1,99 +1,371 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>website sederhana</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <nav>
-        <ul>
-            <li><a href=""></a>Beranda</li>
-            <li><a href="news 1">konten 1</a></li>
-            <li><a href="news 2">konten 2</a></li>
-            <li><a href="news 3">konten 3</a></li>
-            <li><a href="news 4">konten 4</a></li>
+    <title>Undangan Pernikahan - Nara & Reyhan</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Montserrat:wght@200;300;400;500&family=Great+Vibes&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <style>
+        :root {
+            --bg-grey: #a0a0a0; /* Abu-abu yang lebih solid */
+            --dark-grey: #2d2d2d;
+            --light-grey: #d1d1d1;
+            --pure-white: #ffffff;
+            --text-main: #060202;
+        }
 
-        </ul>
-    </nav>
-    <div>
-        <img src="gambar/hostingercover..jpg" class="cover.image">
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--bg-grey);
+            color: var(--text-main);
+            margin: 0;
+            overflow-x: hidden;
+        }
+
+        .font-serif { font-family: 'Cormorant Garamond', serif; }
+        .font-cursive { font-family: 'Great Vibes', cursive; }
+
+        /* Latar Belakang Abu-abu dengan Tekstur */
+        .grey-theme-bg {
+            background-color: #b0b0b0;
+            background-image: url("https://www.transparenttextures.com/patterns/pinstriped-suit.png");
+            background-attachment: fixed;
+        }
+
+        /* Elemen Putih (Ornamen) */
+        .white-ornament {
+            position: absolute;
+            width: 200px;
+            pointer-events: none;
+            opacity: 0.9;
+            z-index: 5;
+            filter: brightness(0) invert(1); /* Memaksa gambar menjadi putih bersih */
+        }
+        .orn-tl { top: -20px; left: -20px; }
+        .orn-tr { top: -20px; right: -20px; transform: scaleX(-1); }
+        .orn-bl { bottom: -20px; left: -20px; transform: scaleY(-1); }
+        .orn-br { bottom: -20px; right: -20px; transform: scale(-1); }
+
+        /* Navigasi */
+        .nav-dock {
+            position: fixed;
+            bottom: 25px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(15px);
+            display: flex;
+            gap: 25px;
+            padding: 12px 25px;
+            border-radius: 50px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+            z-index: 1000;
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+
+        .nav-dock a {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 18px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-dock a.active {
+            color: #ffffff;
+            transform: translateY(-3px);
+        }
+
+        /* Content Cards - Dominasi Putih */
+        .content-card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 30px;
+            padding: 40px 25px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        /* Cover Section */
+        #cover-section {
+            position: fixed;
+            inset: 0;
+            background: var(--bg-grey);
+            background-image: url("https://www.transparenttextures.com/patterns/pinstriped-suit.png");
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 1.2s cubic-bezier(0.85, 0, 0.15, 1);
+            overflow: hidden;
+        }
+        .cover-up { transform: translateY(-100%); }
+
+        /* Frame Photo */
+        .photo-frame {
+            border: 10px solid var(--pure-white);
+            box-shadow: 0 15px 45px rgba(0,0,0,0.2);
+            position: relative;
+        }
+
+        /* Countdown */
+        .timer-unit {
+            background: var(--pure-white);
+            width: 70px;
+            padding: 15px 0;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .btn-open {
+            background: var(--pure-white);
+            color: var(--dark-grey);
+            padding: 15px 35px;
+            border-radius: 50px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-size: 12px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+        }
+        .btn-open:hover { transform: scale(1.05); box-shadow: 0 15px 25px rgba(0,0,0,0.2); }
+
+        .audio-ctrl {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1500;
+            width: 45px;
+            height: 45px;
+            background: var(--pure-white);
+            color: var(--dark-grey);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .divider-white {
+            width: 50px;
+            height: 2px;
+            background: var(--pure-white);
+            margin: 20px auto;
+        }
+
+        ::-webkit-scrollbar { width: 5px; }
+        ::-webkit-scrollbar-thumb { background: var(--pure-white); border-radius: 10px; }
+    </style>
+</head>
+<body class="grey-theme-bg">
+
+    <!-- Cover Section -->
+    <div id="cover-section">
+        <!-- White Decorative Elements -->
+        <img src="https://images.rawpixel.com/image_png_800/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDIyLTA1L2YtcmF3cGl4ZWwtZmxvcmFsLWVsZW1lbnRzLTM2NC1qb2I3NDUucG5n.png" class="white-ornament orn-tl" alt="hiasan">
+        <img src="https://images.rawpixel.com/image_png_800/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDIyLTA1L2YtcmF3cGl4ZWwtZmxvcmFsLWVsZW1lbnRzLTM2NC1qb2I3NDUucG5n.png" class="white-ornament orn-tr" alt="hiasan">
+        <img src="https://images.rawpixel.com/image_png_800/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDIyLTA1L2YtcmF3cGl4ZWwtZmxvcmFsLWVsZW1lbnRzLTM2NC1qb2I3NDUucG5n.png" class="white-ornament orn-bl" alt="hiasan">
+        <img src="https://images.rawpixel.com/image_png_800/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDIyLTA1L2YtcmF3cGl4ZWwtZmxvcmFsLWVsZW1lbnRzLTM2NC1qb2I3NDUucG5n.png" class="white-ornament orn-br" alt="hiasan">
+
+        <div class="text-center px-6 z-10" data-aos="fade-up">
+            <p class="uppercase tracking-[0.6em] text-[10px] mb-8 font-semibold text-white">The Wedding Celebration</p>
+            <h1 class="font-cursive text-7xl text-white mb-8">Nara & Reyhan</h1>
+            
+            <div class="mb-12">
+                <p class="text-xs text-white/70 mb-2">Kepada Yth:</p>
+                <h2 class="text-2xl font-serif font-bold text-white tracking-widest mb-2">Tamu Undangan</h2>
+                <div class="divider-white"></div>
+                <p class="text-[10px] italic text-white/50">*) Mohon maaf bila ada kesalahan penulisan nama/gelar</p>
+            </div>
+
+            <button onclick="openInvitation()" class="btn-open">
+                <i class="fas fa-envelope-open mr-2"></i> Buka Undangan
+            </button>
+        </div>
     </div>
 
-    <main>
-        <div> 
-            <article>
-                <h2>news1</h2>
-                <img src="gambar/hostinger1..jpeg" class="featured-image" alt="konten 1">
-                <p>
+    <!-- Audio Player -->
+    <audio id="weddingMusic" loop>
+        <source src="music.mp3" type="audio/mpeg">
+    </audio>
+    <div class="audio-ctrl" id="musicToggle" onclick="toggleAudio()">
+        <i class="fas fa-music"></i>
+    </div>
 
-Baca artikel CNN Indonesia "Jadwal Timnas Indonesia U-23 di SEA Games 2025" selengkapnya di sini: 
-<br>
-<br>
-https://www.cnnindonesia.com/olahraga/20251121115140-142-1297855/jadwal-timnas-indonesia-u-23-di-sea-games-2025.
-<br>
-<br>
-Download Apps CNN Indonesia sekarang https://app.cnnindonesia.com/</p>
-            </article>
-            /ul>
-    
-    <main>
-        <div> 
-            <article>
-                <h2>news 2</h2>
-                <img src="gambar/hostinger2..jpeg" class="featured-image" alt="konten 1">
-                <p>
+    <!-- Navigation -->
+    <nav class="nav-dock">
+        <a href="#hero" class="active"><i class="fas fa-home"></i></a>
+        <a href="#couple"><i class="fas fa-heart"></i></a>
+        <a href="#event"><i class="fas fa-calendar-alt"></i></a>
+        <a href="#gallery"><i class="fas fa-images"></i></a>
+        <a href="#wishes"><i class="fas fa-comment-dots"></i></a>
+    </nav>
 
-Baca artikel CNN Indonesia "Jadwal Timnas Indonesia U-23 di SEA Games 2025" selengkapnya di sini: 
-<br>
-<br>
-https://www.cnnindonesia.com/olahraga/20251121115140-142-1297855/jadwal-timnas-indonesia-u-23-di-sea-games-2025.
-<br>
-<br>
-Download Apps CNN Indonesia sekarang https://app.cnnindonesia.com/</p>
-            </article>
+    <!-- Main Content -->
+    <main class="max-w-md mx-auto relative px-4 pb-32">
+        
+        <!-- Hero Section -->
+        <section id="hero" class="min-h-screen flex flex-col justify-center text-center py-20">
+            <div data-aos="zoom-in">
+                <p class="font-serif italic text-xl mb-4 text-white">The Marriage Of</p>
+                <h2 class="font-cursive text-7xl text-white mb-10">Nara & Reyhan</h2>
+                <div class="bg-white/20 backdrop-blur-sm py-4 px-10 rounded-full inline-block border border-white/30 mb-12">
+                    <p class="font-serif tracking-[0.4em] text-white text-sm">25 . 06 . 2025</p>
+                </div>
+                
+                <!-- Countdown -->
+                <div id="countdown" class="flex justify-center gap-3">
+                    <div class="timer-unit"><span id="days" class="block text-2xl font-bold">0</span><span class="text-[9px] uppercase font-bold text-gray-400">Hari</span></div>
+                    <div class="timer-unit"><span id="hours" class="block text-xl font-bold">0</span><span class="text-[9px] uppercase font-bold text-gray-400">Jam</span></div>
+                    <div class="timer-unit"><span id="minutes" class="block text-xl font-bold">0</span><span class="text-[9px] uppercase font-bold text-gray-400">Menit</span></div>
+                    <div class="timer-unit"><span id="seconds" class="block text-xl font-bold">0</span><span class="text-[9px] uppercase font-bold text-gray-400">Detik</span></div>
+                </div>
+            </div>
 
-        </div>
+            <div class="mt-20 p-8 bg-white/90 rounded-[40px] shadow-2xl" data-aos="fade-up">
+                <p class="text-sm italic leading-relaxed text-gray-700">
+                    "Dan di antara tanda-tanda (kebesaran)-Nya adalah Dia menciptakan pasangan-pasangan untukmu dari jenismu sendiri, agar kamu cenderung dan merasa tenteram kepadanya..."
+                </p>
+                <p class="text-[10px] mt-4 font-bold tracking-widest text-dark-grey">( QS. AR-RUM: 21 )</p>
+            </div>
+        </section>
+
+        <!-- Couple Section -->
+        <section id="couple" class="py-20 text-center">
+            <p class="font-serif text-3xl text-white mb-6">بسم الله الرحمن الرحيم</p>
+            <p class="text-[11px] mb-20 px-4 leading-relaxed font-bold uppercase tracking-[0.2em] text-white/80" data-aos="fade-up">Assalamu’alaikum Warahmatullahi Wabarakatuh.</p>
+
+            <div class="space-y-32">
+                <!-- Groom -->
+                <div data-aos="fade-up">
+                    <div class="photo-frame w-56 h-72 mx-auto rounded-[40px] overflow-hidden mb-8">
+                        <img src="foto (1).jpg" class="w-full h-full object-cover" alt="Mempelai Pria">
+                    </div>
+                    <h3 class="font-cursive text-5xl text-white mb-3">Reyhan Pratama</h3>
+                    <p class="text-[10px] font-bold tracking-widest uppercase text-white/70 mb-2">Putra Kedua Dari:</p>
+                    <p class="text-sm font-serif italic text-white font-medium">Bapak Hermansyah & Ibu Kartini</p>
+                </div>
+
+                <div class="text-4xl font-cursive text-white" data-aos="zoom-in">&</div>
+
+                <!-- Bride -->
+                <div data-aos="fade-up">
+                    <div class="photo-frame w-56 h-72 mx-auto rounded-[40px] overflow-hidden mb-8">
+                        <img src="foto (2).jpg" class="w-full h-full object-cover" alt="Mempelai Wanita">
+                    </div>
+                    <h3 class="font-cursive text-5xl text-white mb-3">Nara Adelia</h3>
+                    <p class="text-[10px] font-bold tracking-widest uppercase text-white/70 mb-2">Putri Pertama Dari:</p>
+                    <p class="text-sm font-serif italic text-white font-medium">Bapak Adeliawan & Ibu Setyawati</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Event Section -->
+        <section id="event" class="py-20">
+            <div class="space-y-12">
+                <!-- Akad -->
+                <div class="content-card text-center" data-aos="fade-up">
+                    <h3 class="font-serif font-bold text-2xl uppercase tracking-[0.3em] mb-8 text-dark-grey">Akad Nikah</h3>
+                    <div class="flex justify-center items-center gap-6 mb-8">
+                        <div class="text-center">
+                            <p class="text-[10px] font-bold uppercase text-gray-400">Rabu</p>
+                            <p class="text-4xl font-serif font-bold text-dark-grey">25</p>
+                            <p class="text-[10px] font-bold uppercase text-gray-400">Juni 2025</p>
+                        </div>
+                    </div>
+                    <p class="text-sm font-bold mb-8 tracking-widest bg-gray-100 py-2 rounded-full inline-block px-8">08.00 - 10.00 WIB</p>
+                    <p class="text-sm font-serif font-bold mb-8 leading-relaxed">Kediaman Mempelai Wanita<br><span class="text-[11px] font-normal font-sans text-gray-500">Jl. Melati No. 123, Jakarta Selatan</span></p>
+                    <a href="#" class="bg-dark-grey text-white text-[10px] uppercase tracking-widest py-4 px-10 rounded-full inline-block shadow-lg">Buka Google Maps</a>
+                </div>
+
+                <!-- Resepsi -->
+                <div class="content-card text-center" data-aos="fade-up">
+                    <h3 class="font-serif font-bold text-2xl uppercase tracking-[0.3em] mb-8 text-dark-grey">Resepsi</h3>
+                    <div class="flex justify-center items-center gap-6 mb-8">
+                        <div class="text-center">
+                            <p class="text-[10px] font-bold uppercase text-gray-400">Rabu</p>
+                            <p class="text-4xl font-serif font-bold text-dark-grey">25</p>
+                            <p class="text-[10px] font-bold uppercase text-gray-400">Juni 2025</p>
+                        </div>
+                    </div>
+                    <p class="text-sm font-bold mb-8 tracking-widest bg-gray-100 py-2 rounded-full inline-block px-8">11.00 WIB - Selesai</p>
+                    <p class="text-sm font-serif font-bold mb-8 leading-relaxed">Kediaman Mempelai Wanita<br><span class="text-[11px] font-normal font-sans text-gray-500">Jl. Melati No. 123, Jakarta Selatan</span></p>
+                    <a href="#" class="bg-dark-grey text-white text-[10px] uppercase tracking-widest py-4 px-10 rounded-full inline-block shadow-lg">Buka Google Maps</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Gallery -->
+        <section id="gallery" class="py-20">
+            <h2 class="font-cursive text-6xl text-center mb-12 text-white" data-aos="fade-up">Gallery</h2>
+            <div class="grid grid-cols-2 gap-4" data-aos="zoom-in">
+                <div class="rounded-[30px] overflow-hidden aspect-[3/4] border-4 border-white"><img src="foto (3).jpg" class="w-full h-full object-cover"></div>
+                <div class="rounded-[30px] overflow-hidden aspect-[3/4] mt-10 border-4 border-white"><img src="foto (4).jpg" class="w-full h-full object-cover"></div>
+                <div class="rounded-[30px] overflow-hidden aspect-square col-span-2 border-4 border-white shadow-2xl"><img src="foto (5).jpg" class="w-full h-full object-cover"></div>
+            </div>
+        </section>
+
+        <!-- Wishes -->
+        <section id="wishes" class="py-20">
+            <h2 class="font-serif italic text-4xl text-center mb-12 text-white" data-aos="fade-up">Guestbook</h2>
+            <div class="content-card mb-10">
+                <form id="wishForm" class="space-y-4">
+                    <input type="text" placeholder="Nama Anda" class="w-full p-4 rounded-2xl bg-gray-100 border-none outline-none text-sm" required>
+                    <textarea placeholder="Ucapan selamat..." rows="3" class="w-full p-4 rounded-2xl bg-gray-100 border-none outline-none text-sm" required></textarea>
+                    <button type="submit" class="bg-dark-grey text-white w-full py-4 rounded-2xl text-[10px] uppercase tracking-widest font-bold">Kirim Ucapan</button>
+                </form>
+            </div>
+            <div id="wishContainer" class="space-y-4 overflow-y-auto max-h-[400px]">
+                <div class="bg-white/90 p-5 rounded-2xl shadow-md border-l-8 border-bg-grey">
+                    <p class="font-bold text-[11px] text-dark-grey">Mbak Taylor</p>
+                    <p class="text-xs text-gray-600 italic">"Wishing you both a lifetime of happiness!"</p>
+                </div>
+            </div>
+        </section>
+
     </main>
-     <main>
-        <div> 
-            <article>
-                <h2>news 3</h2>
-                <img src="gambar/hostinger3..png" class="featured-image" alt="konten 1">
-                <p>
 
-Baca artikel CNN Indonesia "Jadwal Timnas Indonesia U-23 di SEA Games 2025" selengkapnya di sini: 
-<br>
-<br>
-https://www.cnnindonesia.com/olahraga/20251121115140-142-1297855/jadwal-timnas-indonesia-u-23-di-sea-games-2025.
-<br>
-<br>
-Download Apps CNN Indonesia sekarang https://app.cnnindonesia.com/</p>
-            </article>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ duration: 1200, once: true });
 
-        </div>
-    </main>
-     <main>
-        <div> 
-            <article>
-                <h2>news 4</h2>
-                <img src="gambar/hostinger4..jpeg" class="featured-image" alt="konten 1">
-                <p>
+        function openInvitation() {
+            document.getElementById('cover-section').classList.add('cover-up');
+            document.body.style.overflow = 'auto';
+            document.getElementById('weddingMusic').play();
+            setTimeout(() => { AOS.refresh(); }, 1200);
+        }
 
-Baca artikel CNN Indonesia "Jadwal Timnas Indonesia U-23 di SEA Games 2025" selengkapnya di sini: 
-<br>
-<br>
-https://www.cnnindonesia.com/olahraga/20251121115140-142-1297855/jadwal-timnas-indonesia-u-23-di-sea-games-2025.
-<br>
-<br>
-Download Apps CNN Indonesia sekarang https://app.cnnindonesia.com/</p>
-            </article>
+        function toggleAudio() {
+            const audio = document.getElementById('weddingMusic');
+            if (audio.paused) audio.play(); else audio.pause();
+        }
 
-        </div>
-    </main>
-    <footer>
-        <p>made in halmi sofyan</p>
-    </footer>
+        const weddingDate = new Date("June 25, 2025 08:00:00").getTime();
+        setInterval(() => {
+            const now = new Date().getTime();
+            const diff = weddingDate - now;
+            if (diff > 0) {
+                document.getElementById('days').innerText = Math.floor(diff / (1000 * 60 * 60 * 24));
+                document.getElementById('hours').innerText = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                document.getElementById('minutes').innerText = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                document.getElementById('seconds').innerText = Math.floor((diff % (1000 * 60)) / 1000);
+            }
+        }, 1000);
+
+        document.getElementById('wishForm').onsubmit = function(e) {
+            e.preventDefault();
+            const container = document.getElementById('wishContainer');
+            const newWish = document.createElement('div');
+            newWish.className = "bg-white/90 p-5 rounded-2xl shadow-md border-l-8 border-bg-grey";
+            newWish.innerHTML = `<p class="font-bold text-[11px] text-dark-grey">${this[0].value}</p><p class="text-xs text-gray-600 italic">"${this[1].value}"</p>`;
+            container.prepend(newWish);
+            this.reset();
+        };
+        window.onload = () => { document.body.style.overflow = 'hidden'; };
+    </script>
 </body>
 </html>
